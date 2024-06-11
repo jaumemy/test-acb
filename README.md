@@ -2,6 +2,12 @@
 
 Proyecto Django para crear tres endpoints que retornan información acerca de un partido
 
+* Clonar repositorio
+```bash
+git clone https://github.com/jaumemy/test-acb.git
+git clone git@github.com:jaumemy/test-acb.git
+```
+
 ## Activar el Entorno Virtual
 
 Para este proyecto, se recomienda utilizar un entorno virtual de Python para gestionar las dependencias de manera aislada. Sigue estos pasos para activar el entorno virtual:
