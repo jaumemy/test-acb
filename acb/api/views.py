@@ -2,6 +2,7 @@ import requests
 
 from django.db import transaction
 
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -40,18 +41,22 @@ class PbpLeanView(APIView):
                 }
                 response = requests.get(endpoint, headers=headers, params=params)
 
-                with transaction.atomic():
-                    for el in response.json():
-                        MatchEvent.objects.create(
-                            game_id=el.get("id_match"),
-                            team_id=el.get("team").get("id_team_denomination") if el.get("team") else None,
-                            player_license_id=el.get("id_license"),
-                            action_time=el.get("crono"),
-                            action_type=el.get("id_playbyplaytype")
-                        )
+                if response:
+                    with transaction.atomic():
+                        for el in response.json():
+                            MatchEvent.objects.create(
+                                game_id=el.get("id_match"),
+                                team_id=el.get("team").get("id_team_denomination") if el.get("team") else None,
+                                player_license_id=el.get("id_license"),
+                                action_time=el.get("crono"),
+                                action_type=el.get("id_playbyplaytype")
+                            )
 
-                matchevent_qs = MatchEvent.objects.filter(game_id=game_id)
-                result = Response(MatchEventSerializer(matchevent_qs, many=True).data)
+                    matchevent_qs = MatchEvent.objects.filter(game_id=game_id)
+                    result = Response(MatchEventSerializer(matchevent_qs, many=True).data)
+
+                else:
+                    result = Response({"info": "No data found"})
 
             except Exception as e:
                 print("Error: ", e)

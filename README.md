@@ -62,16 +62,45 @@ Para este proyecto, se recomienda utilizar un entorno virtual de Python para ges
 
 ## Endpoints de prueba
 
-`http://127.0.0.1:8000/acb-api/pbp-lean/103789`
+1. **Obtener token**:
 
-`http://127.0.0.1:8000/acb-api/game-leaders/103789`
+POST `http://localhost:8000/acb-api/token/`
+```bash
+curl -X POST -d "username={usuario}&password={contraseña}" http://localhost:8000/acb-api/token/
+```
 
-`http://127.0.0.1:8000/acb-api/game-biggest-lead/103789`
+2. **Actualizar token**:
 
-*También funciona para otros partidos
+POST `http://localhost:8000/acb-api/token/refresh/`
+```bash
+curl -X POST http://localhost:8000/acb-api/token/refresh/ -H "Content-Type: application/json" -d '{"refresh": "{refresh}"}'
+```
 
-### Pendiente
-* Tests
-* Autenticación
-* Code Review
-* ... 
+3. **Endpoints**:
+
+GET `http://localhost:8000/acb-api/pbp-lean/103789`
+```bash
+curl --location --request GET 'http://localhost:8000/acb-api/pbp-lean/103789' \
+--header 'Authorization: Bearer {access}'
+```
+
+GET `http://localhost:8000/acb-api/game-leaders/103789`
+```bash
+curl --location --request GET 'http://localhost:8000/acb-api/game-leaders/103789' \
+--header 'Authorization: Bearer {access}'
+```
+
+GET `http://localhost:8000/acb-api/game-biggest-lead/103789`
+```bash
+curl --location --request GET 'http://localhost:8000/acb-api/game-biggest-lead/103789' \
+--header 'Authorization: Bearer {access}'
+```
+
+
+## Tests
+
+Ejecutar desde directorio raíz
+
+```bash
+pytest
+```

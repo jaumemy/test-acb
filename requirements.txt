@@ -9,5 +9,12 @@ django-filter==2.4.0  #
 # DRF-spectacular for api documentation
 drf-spectacular==0.27.2  # https://github.com/tfranzel/drf-spectacular
 
+# Testing
+pytest==8.2.2  # https://github.com/pytest-dev/pytest
+pytest-django==4.8.0  # https://github.com/pytest-dev/pytest-django
+pytest-sugar==1.0.0  # https://github.com/Frozenball/pytest-sugar
+pytest-cov==5.0.0  # https://github.com/pytest-dev/pytest-cov
+
+# Others
 requests==2.32.3  # https://pypi.org/project/requests/
 ipdb==0.13.13  # https://github.com/gotcha/ipdb
